@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { IconButton } from '@material-ui/core'
 import { Delete, MoreVert } from '@material-ui/icons'
+import { connect } from 'react-redux'
+import { removeBook } from 'store/booksReducer'
 
 const ToolBarWrapper = styled.div`
   position: absolute;
@@ -9,17 +11,24 @@ const ToolBarWrapper = styled.div`
   right: 3px;
 `
 
-const ToolBar = ({ id }) => {
+const ToolBar = ({ id, removeBook }) => {
   return (
     <ToolBarWrapper>
-      <IconButton size='small'>
+      <IconButton size="small">
         <MoreVert />
       </IconButton>
-      <IconButton size='small'>
+      <IconButton size="small" onClick={() => removeBook(id)}>
         <Delete />
       </IconButton>
     </ToolBarWrapper>
   )
 }
 
-export default ToolBar
+const mapDispatch = {
+  removeBook
+}
+
+export default connect(
+  null,
+  mapDispatch
+)(ToolBar)
