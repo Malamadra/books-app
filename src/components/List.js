@@ -35,8 +35,8 @@ const List = ({ data }) => {
         <SubText>You have lent {data.length} books to friends</SubText>
         <TextMain>Lent to:</TextMain>
       </ListTitle>
-      {data.map(({ id, ...rest }) => (
-        <Card key={id} {...rest} />
+      {data.map(({ id, ...rest }, index) => (
+        <Card key={id} {...rest} id={id} index={index} />
       ))}
     </Wrapper>
   )

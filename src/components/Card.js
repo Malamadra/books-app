@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import colors from 'constants/colors'
 import { TextMain, SubText } from 'components/UI/common'
+import ToolBar from './ToolBar'
 
 const CardWrapper = styled.div`
   width: 100%;
@@ -39,18 +40,20 @@ const FriendInfo = styled.div`
   background: ${colors.darkSky};
   padding: 40px 20px;
   box-sizing: border-box;
+  position: relative;
 `
 
-const Card = ({ title, author, friend }) => {
+const Card = ({ title, author, friend, index, id }) => {
   return (
     <CardWrapper>
-      <Number>10</Number>
+      <Number>{index + 1}</Number>
       <CardContentWrapper>
         <BookInfo>
           <TextMain marginBottom="10px">{title}</TextMain>
           <SubText fontWeight="bold">{author}</SubText>
         </BookInfo>
         <FriendInfo>
+          <ToolBar id={id} />
           <TextMain textAlign="center" marginBottom="20px">
             {friend}
           </TextMain>
