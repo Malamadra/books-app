@@ -4,7 +4,7 @@ import booksReducer from 'store/booksReducer'
 
 export default createStore(
   combineReducers({
-    booksReducer
+    books: booksReducer
   }),
   composeWithDevTools()
 )

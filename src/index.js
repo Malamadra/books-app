@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createGlobalStyle } from 'styled-components'
+import { Provider as ReduxProvider } from 'react-redux'
+import store from 'store'
 import App from 'App'
 
 const GlobalStyle = createGlobalStyle`  
@@ -29,7 +31,9 @@ const GlobalStyle = createGlobalStyle`
 const Root = (
   <>
     <GlobalStyle />
-    <App />
+    <ReduxProvider store={store}>
+      <App />
+    </ReduxProvider>
   </>
 )
 
