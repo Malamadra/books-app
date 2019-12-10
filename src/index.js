@@ -1,6 +1,36 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { createGlobalStyle } from 'styled-components'
+import App from 'App'
 
-const App = () => <div>Initial</div>
+const GlobalStyle = createGlobalStyle`  
+  html {
+    font-size: 100%;
+  }
+  
+  body {
+    overflow: hidden;
+    a {
+      text-decoration: none;
+    }
+  }
+  
+  body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }  
+  
+  #root {
+    min-height: 100%;
+  }
+`
 
-ReactDOM.render(<App />, document.getElementById('root'))
+const Root = (
+  <>
+    <GlobalStyle />
+    <App />
+  </>
+)
+
+ReactDOM.render(Root, document.getElementById('root'))
