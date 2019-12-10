@@ -9,7 +9,6 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 20px;
   color: ${colors.white};
   font-size: 24px;
   width: 100%;
@@ -27,18 +26,19 @@ const Content = styled.div`
 `
 
 const Container = styled.div`
-  max-width: 900px;
+  max-width: 940px;
   margin: 0 auto;
+  padding: 0 20px;
 `
 
 const MainLayout = ({ children }) => (
   <div>
-    <Header>Books that I have lent to friends</Header>
+    <Header>
+      <Container>Books that I have lent to friends</Container>
+    </Header>
     <Body>
       <Content>
-        <Container>
-          {children}
-        </Container>
+        <Container>{children}</Container>
       </Content>
     </Body>
   </div>
