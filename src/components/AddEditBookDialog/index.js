@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Dialog from '@material-ui/core/Dialog'
 import { connect } from 'react-redux'
 import { selectBookToEdit } from 'store/dialogSelectors'
 import { closeDialog } from 'store/dialogReducer'
-import { TextField, Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
+import { TextField, KeyboardDatePicker } from 'components/UI/form'
 import colors from 'constants/colors'
 
 const DialogHeader = styled.div`
@@ -22,28 +23,53 @@ const Form = styled.div`
   padding: 20px;
 `
 
-const AddEditBookDialog = ({ closeDialog, bookToEdit }) => {
-  return (
-    <Dialog open onClose={closeDialog} fullWidth>
-      <DialogHeader>Lending a book away</DialogHeader>
-      <Form>
-        <Grid container spacing={6}>
-          <Grid item xs={6}>
-            <TextField id="standard-basic" label="Book title" fullWidth />
+class AddEditBookDialog extends React.Component {
+  state = {
+    isSetInitially: false,
+    fields: {
+      title: '',
+      author: '',
+      friend: '',
+      time: ''
+    }
+  }
+
+  render() {
+    const { closeDialog } = this.props
+
+    return (
+      <Dialog open onClose={closeDialog} fullWidth>
+        <DialogHeader>Lending a book away</DialogHeader>
+        <Form>
+          <Grid container spacing={6}>
+            <Grid item xs={6}>
+              <TextField id="standard-basic" label="Book title" fullWidth />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField id="standard-basic" label="Book author" fullWidth />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField id="standard-basic" label="Friend's name" fullWidth />
+            </Grid>
+            <Grid item xs={6}>
+              <KeyboardDatePicker
+                disableToolbar
+                variant="inline"
+                format="MM/dd/yyyy"
+                id="date-picker-inline"
+                label="Date picker inline"
+                value={null}
+                onChange={() => {}}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date'
+                }}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <TextField id="standard-basic" label="Book author" fullWidth />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField id="standard-basic" label="Friend's name" fullWidth />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField id="standard-basic" label="Placeholder" fullWidth />
-          </Grid>
-        </Grid>
-      </Form>
-    </Dialog>
-  )
+        </Form>
+      </Dialog>
+    )
+  }
 }
 
 const mapState = state => ({

@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { createGlobalStyle } from 'styled-components'
 import { Provider as ReduxProvider } from 'react-redux'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import store from 'store'
 import App from 'App'
 
@@ -32,7 +34,9 @@ const Root = (
   <>
     <GlobalStyle />
     <ReduxProvider store={store}>
-      <App />
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <App />
+      </MuiPickersUtilsProvider>
     </ReduxProvider>
   </>
 )
