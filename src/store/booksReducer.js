@@ -2,6 +2,7 @@ import R from 'ramda'
 import { createAction, handleActions } from 'redux-actions'
 
 const ADD_BOOK = 'Books/ADD_BOOK'
+const REMOVE_BOOK = 'Books/REMOVE_BOOK'
 
 const initialData = [
   {
@@ -35,6 +36,7 @@ const initialState = {
 }
 
 export const addBook = createAction(ADD_BOOK)
+export const removeBook = createAction(REMOVE_BOOK)
 
 export default handleActions(
   {
@@ -42,6 +44,13 @@ export default handleActions(
       R.evolve(
         {
           data: R.append(payload)
+        },
+        state
+      ),
+    [REMOVE_BOOK]: (state, { payload: id }) =>
+      R.evolve(
+        {
+          data: R.reject(R.propEq('id', id))
         },
         state
       )
