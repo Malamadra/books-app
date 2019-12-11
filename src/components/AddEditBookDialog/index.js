@@ -129,7 +129,7 @@ class AddEditBookDialog extends React.Component {
           </Grid>
         </Form>
         <ButtonsSection>
-          <CancelButton>Cancel</CancelButton>
+          <CancelButton onClick={closeDialog}>Cancel</CancelButton>
           <PrimaryButton>Save</PrimaryButton>
         </ButtonsSection>
       </Dialog>
