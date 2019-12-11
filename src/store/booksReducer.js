@@ -3,6 +3,7 @@ import { createAction, handleActions } from 'redux-actions'
 
 const ADD_BOOK = 'Books/ADD_BOOK'
 const REMOVE_BOOK = 'Books/REMOVE_BOOK'
+const EDIT_BOOK = 'Books/EDIT_BOOK'
 
 const initialData = [
   {
@@ -37,6 +38,7 @@ const initialState = {
 
 export const addBook = createAction(ADD_BOOK)
 export const removeBook = createAction(REMOVE_BOOK)
+export const editBook = createAction(EDIT_BOOK)
 
 export default handleActions(
   {
@@ -51,6 +53,19 @@ export default handleActions(
       R.evolve(
         {
           data: R.reject(R.propEq('id', id))
+        },
+        state
+      ),
+    [EDIT_BOOK]: (state, { payload: { id, updatedFields } }) =>
+      R.evolve(
+        {
+          data: R.map(
+            R.ifElse(
+              R.propEq('id', id),
+              R.mergeLeft(updatedFields),
+              R.identity
+            )
+          )
         },
         state
       )

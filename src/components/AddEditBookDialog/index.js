@@ -5,7 +5,7 @@ import Dialog from '@material-ui/core/Dialog'
 import { connect } from 'react-redux'
 import { selectBookToEdit, selectIsEditMode } from 'store/dialogSelectors'
 import { closeDialog } from 'store/dialogReducer'
-import { addBook } from 'store/booksReducer'
+import { addBook, editBook } from 'store/booksReducer'
 import { Grid } from '@material-ui/core'
 import { TextField, KeyboardDatePicker, TextFieldDisabled } from 'components/UI/form'
 import colors from 'constants/colors'
@@ -106,7 +106,17 @@ class AddEditBookDialog extends React.Component {
     closeDialog()
   }
 
-  handleEdit = () => {}
+  handleEdit = () => {
+    const { editBook , bookToEdit, closeDialog } = this.props
+    const { fields } = this.state
+
+    editBook({
+      id: bookToEdit.id,
+      updatedFields: fields
+    })
+
+    closeDialog()
+  }
 
   handleSave = () => {
     const { isEditMode } = this.props
@@ -137,8 +147,6 @@ class AddEditBookDialog extends React.Component {
     const { closeDialog } = this.props
     const { fields } = this.state
     const isFormValid = validateForm(fields)
-
-    console.log(this.state)
 
     return (
       <Dialog open onClose={closeDialog} fullWidth>
@@ -217,7 +225,8 @@ const mapState = state => ({
 
 const mapDispatch = {
   closeDialog,
-  addBook
+  addBook,
+  editBook
 }
 
 export default connect(
