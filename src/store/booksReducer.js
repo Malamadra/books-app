@@ -12,7 +12,8 @@ const initialData = [
     author: 'Leo Tolstoy',
     friend: 'Jack Johnson',
     createdAt: 1576063346723,
-    until: 1580469720000
+    until: 1580469720000,
+    isReturned: false
   },
   {
     id: '2',
@@ -20,7 +21,8 @@ const initialData = [
     author: 'Mark Twain',
     friend: 'Richard Smith',
     createdAt: 1576063346723,
-    until: 1580469720000
+    until: 1580469720000,
+    isReturned: false
   },
   {
     id: '3',
@@ -28,7 +30,8 @@ const initialData = [
     author: 'William Shakespeare',
     friend: 'Adam Snowden',
     createdAt: 1576063346723,
-    until: 1580469720000
+    until: 1580469720000,
+    isReturned: false
   }
 ]
 
@@ -60,11 +63,7 @@ export default handleActions(
       R.evolve(
         {
           data: R.map(
-            R.ifElse(
-              R.propEq('id', id),
-              R.mergeLeft(updatedFields),
-              R.identity
-            )
+            R.ifElse(R.propEq('id', id), R.mergeLeft(updatedFields), R.identity)
           )
         },
         state

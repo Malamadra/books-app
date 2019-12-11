@@ -18,7 +18,7 @@ export default handleActions(
     [OPEN_DIALOG]: (state, { payload: { id, isEditMode = false } }) =>
       R.evolve(
         {
-          isOpen: R.T,
+          isOpen: R.always(true),
           bookId: R.always(id),
           isEditMode: R.always(isEditMode)
         },
@@ -27,9 +27,9 @@ export default handleActions(
     [CLOSE_DIALOG]: state =>
       R.evolve(
         {
-          isOpen: R.F,
+          isOpen: R.always(false),
           bookId: R.always(null),
-          isEditMode: R.F
+          isEditMode: R.always(false)
         },
         state
       )

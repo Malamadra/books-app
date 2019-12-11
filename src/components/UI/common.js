@@ -15,6 +15,7 @@ export const SubText = styled.div`
   font-size: 16px;
   ${({ fontWeight }) => fontWeight && `font-weight: ${fontWeight}`};
   ${({ textAlign }) => textAlign && `text-align: ${textAlign}`};
+  ${({ marginBottom }) => marginBottom && `margin-bottom: ${marginBottom}`};
 `
 
 export const Placeholder = styled(Card)`

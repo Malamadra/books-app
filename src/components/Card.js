@@ -4,6 +4,7 @@ import colors from 'constants/colors'
 import { TextMain, SubText } from 'components/UI/common'
 import { getDateToShow } from 'utils/date'
 import ToolBar from './ToolBar'
+import { StaticWrapper } from '@material-ui/pickers/wrappers/StaticWrapper'
 
 const CardWrapper = styled.div`
   width: 100%;
@@ -44,7 +45,24 @@ const FriendInfo = styled.div`
   position: relative;
 `
 
-const Card = ({ title, author, friend, index, id, createdAt, until }) => (
+const StatusWrapper = styled.div`
+  text-align: center;
+`
+
+const Status = styled.span`
+  ${({ color }) => color && `color: ${color}`};
+`
+
+const Card = ({
+  title,
+  author,
+  friend,
+  index,
+  id,
+  createdAt,
+  until,
+  isReturned
+}) => (
   <CardWrapper>
     <Number>{index + 1}</Number>
     <CardContentWrapper>
@@ -57,9 +75,15 @@ const Card = ({ title, author, friend, index, id, createdAt, until }) => (
         <TextMain textAlign="center" marginBottom="20px">
           {friend}
         </TextMain>
-        <SubText textAlign="center">
+        <SubText textAlign="center" marginBottom="5px">
           {getDateToShow(createdAt)} - {getDateToShow(until)}
         </SubText>
+        <StatusWrapper>
+          Status:{' '}
+          <Status color={isReturned ? colors.greenLight : colors.red}>
+            {isReturned ? 'Returned' : 'Lent'}
+          </Status>
+        </StatusWrapper>
       </FriendInfo>
     </CardContentWrapper>
   </CardWrapper>
