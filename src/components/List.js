@@ -6,7 +6,7 @@ import { Placeholder, TextMain, SubText } from 'components/UI/common'
 import Card from './Card'
 
 const Wrapper = styled.div`
-  margin: 20px 0;
+  margin: 20px 0 80px 0;
 `
 
 const ListTitle = styled.div`

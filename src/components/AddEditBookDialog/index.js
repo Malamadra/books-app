@@ -1,13 +1,23 @@
 import React from 'react'
+import R from 'ramda'
 import styled from 'styled-components'
 import Dialog from '@material-ui/core/Dialog'
 import { connect } from 'react-redux'
 import { selectBookToEdit, selectIsEditMode } from 'store/dialogSelectors'
 import { closeDialog } from 'store/dialogReducer'
+import { addBook, editBook } from 'store/booksReducer'
 import { Grid } from '@material-ui/core'
-import { TextField, KeyboardDatePicker } from 'components/UI/form'
+import {
+  TextField,
+  KeyboardDatePicker,
+  TextFieldDisabled,
+  Checkbox
+} from 'components/UI/form'
 import colors from 'constants/colors'
 import { PrimaryButton, CancelButton } from 'components/UI/Button'
+import { getDatePlusWeek, getDatePlusDay } from 'utils/date'
+import uuid from 'uuid'
+import { getTime } from 'date-fns'
 
 const DialogHeader = styled.div`
   background: ${colors.pinkLight};
@@ -30,20 +40,44 @@ const Form = styled.div`
   padding: 20px;
 `
 
+const WarningMessage = styled.div`
+  margin-bottom: 10px;
+  color: ${colors.red};
+  font-size: 14px;
+`
+
+const validateForm = R.pipe(
+  R.values,
+  R.any(R.isEmpty),
+  R.not
+)
+
 class AddEditBookDialog extends React.Component {
   static getDerivedStateFromProps(props, state) {
     const { isEditMode, bookToEdit } = props
     const { isSetInitially } = state
 
     if (!isSetInitially && isEditMode && !!bookToEdit) {
-      const { title, author, friend, createdAt } = bookToEdit
+      const { title, author, friend, until, isReturned } = bookToEdit
 
       return {
         isSetInitially: true,
         fields: {
           title,
           author,
-          friend
+          friend,
+          until,
+          isReturned
+        }
+      }
+    }
+
+    if (!isSetInitially && !isEditMode) {
+      return {
+        isSetInitially: true,
+        fields: {
+          ...state.fields,
+          until: getDatePlusWeek()
         }
       }
     }
@@ -57,8 +91,44 @@ class AddEditBookDialog extends React.Component {
       title: '',
       author: '',
       friend: '',
-      until: ''
+      until: '',
+      isReturned: false
     }
+  }
+
+  handleAdd = () => {
+    const { addBook, closeDialog } = this.props
+    const { fields } = this.state
+
+    addBook({
+      id: uuid(),
+      title: fields.title,
+      author: fields.author,
+      friend: fields.friend,
+      createdAt: Date.now(),
+      until: fields.until,
+      isReturned: false
+    })
+
+    closeDialog()
+  }
+
+  handleEdit = () => {
+    const { editBook, bookToEdit, closeDialog } = this.props
+    const { fields } = this.state
+
+    editBook({
+      id: bookToEdit.id,
+      updatedFields: fields
+    })
+
+    closeDialog()
+  }
+
+  handleSave = () => {
+    const { isEditMode } = this.props
+
+    return isEditMode ? this.handleEdit() : this.handleAdd()
   }
 
   handleInputChange = event => {
@@ -72,9 +142,26 @@ class AddEditBookDialog extends React.Component {
     }))
   }
 
+  handleIsReturnedChange = () =>
+    this.setState(({ fields }) => ({
+      fields: {
+        ...fields,
+        isReturned: !fields.isReturned
+      }
+    }))
+
+  handlePickerChange = date =>
+    this.setState(({ fields }) => ({
+      fields: {
+        ...fields,
+        until: getTime(date)
+      }
+    }))
+
   render() {
-    const { closeDialog } = this.props
+    const { closeDialog, isEditMode } = this.props
     const { fields } = this.state
+    const isFormValid = validateForm(fields)
 
     return (
       <Dialog open onClose={closeDialog} fullWidth>
@@ -120,17 +207,35 @@ class AddEditBookDialog extends React.Component {
                 id="date-picker-inline"
                 label="Until"
                 value={fields.until}
-                onChange={(...args) => console.log(args)}
+                minDate={getDatePlusDay()}
+                onChange={this.handlePickerChange}
                 KeyboardButtonProps={{
                   'aria-label': 'change date'
                 }}
+                TextFieldComponent={TextFieldDisabled}
               />
             </Grid>
+            {isEditMode && (
+              <Grid item xs={12}>
+                <Checkbox
+                  checked={fields.isReturned}
+                  handleChange={this.handleIsReturnedChange}
+                  label="Book has been returned back"
+                />
+              </Grid>
+            )}
           </Grid>
         </Form>
         <ButtonsSection>
-          <CancelButton onClick={closeDialog}>Cancel</CancelButton>
-          <PrimaryButton>Save</PrimaryButton>
+          {!isFormValid && (
+            <WarningMessage>Fill all the fields before saving!</WarningMessage>
+          )}
+          <div>
+            <CancelButton onClick={closeDialog}>Cancel</CancelButton>
+            <PrimaryButton onClick={this.handleSave} disabled={!isFormValid}>
+              Save
+            </PrimaryButton>
+          </div>
         </ButtonsSection>
       </Dialog>
     )
@@ -143,7 +248,9 @@ const mapState = state => ({
 })
 
 const mapDispatch = {
-  closeDialog
+  closeDialog,
+  addBook,
+  editBook
 }
 
 export default connect(
