@@ -9,6 +9,11 @@ export const selectIsDialogOpen = createSelector(
   R.prop('isOpen')
 )
 
+export const selectIsEditMode = createSelector(
+  selectStateSegment,
+  R.prop('isEditMode')
+)
+
 export const selectBookId = createSelector(
   selectStateSegment,
   R.prop('bookId')

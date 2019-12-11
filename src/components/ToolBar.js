@@ -15,7 +15,7 @@ const ToolBarWrapper = styled.div`
 const ToolBar = ({ id, removeBook, openDialog }) => {
   return (
     <ToolBarWrapper>
-      <IconButton size="small" onClick={() => openDialog(id)}>
+      <IconButton size="small" onClick={() => openDialog({ id, isEditMode: true })}>
         <MoreVert />
       </IconButton>
       <IconButton size="small" onClick={() => removeBook(id)}>
