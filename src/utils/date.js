@@ -1,4 +1,4 @@
-import { getTime, addDays } from 'date-fns'
+import { getTime, addDays, format } from 'date-fns'
 
 export const getDatePlusWeek = () => {
   const date = addDays(new Date(), 7)
@@ -11,3 +11,5 @@ export const getDatePlusDay = () => {
 
   return getTime(date)
 }
+
+export const getDateToShow = date => format(date, 'MM.dd.yyyy')
