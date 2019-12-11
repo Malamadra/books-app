@@ -10,24 +10,24 @@ const initialData = [
     title: 'Anna Karenina',
     author: 'Leo Tolstoy',
     friend: 'Jack Johnson',
-    createdAt: '',
-    closedAt: ''
+    createdAt: 1576063346723,
+    until: 1580469720000
   },
   {
     id: '2',
     title: 'The Adventures of Huckleberry Finn',
     author: 'Mark Twain',
     friend: 'Richard Smith',
-    createdAt: '',
-    closedAt: ''
+    createdAt: 1576063346723,
+    until: 1580469720000
   },
   {
     id: '3',
     title: 'Hamlet',
     author: 'William Shakespeare',
     friend: 'Adam Snowden',
-    createdAt: '',
-    closedAt: ''
+    createdAt: 1576063346723,
+    until: 1580469720000
   }
 ]
 

@@ -4,5 +4,6 @@ export default {
   white: '#ffffff',
   lightGrey: '#f3f3f3',
   darkGrey: '#a9a9a9',
-  darkSky: '#e5ebef'
+  darkSky: '#e5ebef',
+  red: 'red'
 }

@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { TextField as TextFieldSrc } from '@material-ui/core'
 import { KeyboardDatePicker as KeyboardDatePickerSrc } from '@material-ui/pickers'
 import colors from 'constants/colors'
+import React from 'react'
 
 export const TextField = styled(TextFieldSrc)`
   .MuiInputBase-root:after {
@@ -22,3 +23,10 @@ export const KeyboardDatePicker = styled(KeyboardDatePickerSrc)`
     color: ${colors.pinkLight};
   }
 `
+
+export const TextFieldDisabled = props => (
+  <TextField
+    {...props}
+   onChange={() => {}}
+  />
+)
